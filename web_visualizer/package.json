@@ -1,0 +1,20 @@
+{
+  "name": "apex-rl-visualizer",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@dimforge/rapier3d-compat": "^0.21.0",
+    "lucide": "^1.70.0",
+    "onnxruntime-web": "^1.31.1",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.6"
+  }
+}

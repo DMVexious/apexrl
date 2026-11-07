@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX-RL // 3D Autonomous Racing Environment</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app-container"></div>
+
+  <div id="loading">
+    <div class="hud-title">APEX-RL</div>
+    <div class="bar"></div>
+    <div class="sub" id="loading-text">Initializing Rapier3D physics…</div>
+  </div>
+
+  <!-- Every panel: .panel-head (title + minimize button) and .panel-body (hidden when collapsed).
+       Collapsed state is saved in localStorage; H hides the whole HUD. -->
+  <div id="hud-overlay">
+    <!-- Top Centre Lap Timer -->
+    <div class="glass-panel" data-panel="lap" id="lap-panel" style="grid-column: 2; grid-row: 1;">
+      <div class="panel-head">
+        <span class="panel-title">LAP <b id="val-lap">0</b> · <b id="val-laptime-mini">--:--.---</b></span>
+        <button class="min-btn" title="Minimize"><i data-lucide="minus"></i><i data-lucide="plus"></i></button>
+      </div>
+      <div class="panel-body lap-grid">
+        <div><div class="label">CURRENT</div><div class="v big" id="val-laptime">--:--.---</div></div>
+        <div><div class="label">LAST</div><div class="v" id="val-lastlap">--:--.---</div></div>
+        <div><div class="label">BEST</div><div class="v" id="val-bestlap">--:--.---</div></div>
+      </div>
+    </div>
+
+    <!-- Top Right Map Switcher -->
+    <div class="glass-panel" data-panel="maps" id="map-panel" style="grid-column: 3; grid-row: 1;">
+      <div class="panel-head">
+        <span class="panel-title">MAP <b id="val-map">—</b></span>
+        <button class="min-btn" title="Minimize"><i data-lucide="minus"></i><i data-lucide="plus"></i></button>
+      </div>
+      <div class="panel-body map-row">
+        <button class="map-btn active" data-map="grass"><i data-lucide="trees"></i>GRASS</button>
+        <button class="map-btn" data-map="desert"><i data-lucide="sun"></i>DESERT</button>
+        <button class="map-btn" data-map="windy"><i data-lucide="wind"></i>WIND</button>
+        <button class="map-btn" data-map="ice"><i data-lucide="snowflake"></i>ICE</button>
+      </div>
+    </div>
+
+    <!-- Bottom Left Telemetry -->
+    <div class="glass-panel" data-panel="telemetry" style="grid-column: 1; grid-row: 3; align-self: end;">
+      <div class="panel-head">
+        <span class="panel-title"><b id="val-speed">0</b> KM/H <span id="boost-tag" class="boost-tag">BOOST</span></span>
+        <button class="min-btn" title="Minimize"><i data-lucide="minus"></i><i data-lucide="plus"></i></button>
+      </div>
+      <div class="panel-body">
+        <div class="label">REAR TIRE SLIP <b id="val-slip">0.00</b></div>
+        <div class="gauge-bar-outer"><div id="bar-slip" class="gauge-bar-inner"></div></div>
+
+        <div class="label">THROTTLE / BRAKE <b id="val-throttle">+0.00</b></div>
+        <div class="gauge-bar-outer gauge-split"><div id="bar-throttle" class="gauge-bar-inner"></div></div>
+
+        <div class="label">STEERING <b id="val-steer">L 0.0°</b></div>
+        <div class="gauge-bar-outer gauge-split"><div id="bar-steer" class="gauge-bar-inner"></div></div>
+
+        <div class="label">HANDBRAKE <b id="val-handbrake">0.00</b></div>
+        <div class="gauge-bar-outer"><div id="bar-handbrake" class="gauge-bar-inner"></div></div>
+
+        <div class="label">GRIP μ <b id="val-mu">0.85</b> · LOAD <b id="val-load">1.00 g</b></div>
+      </div>
+    </div>
+
+    <!-- Bottom Centre Controls -->
+    <div class="glass-panel" data-panel="controls" id="control-panel" style="grid-column: 2; grid-row: 3;">
+      <div class="panel-head">
+        <span class="panel-title"><span class="pill" id="val-mode">AI PILOT</span> <span id="val-backend">loading…</span></span>
+        <button class="min-btn" title="Minimize"><i data-lucide="minus"></i><i data-lucide="plus"></i></button>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <button class="ctl-btn on" id="btn-mode"><i data-lucide="brain"></i>AI / MANUAL</button>
+          <button class="ctl-btn" id="btn-camera"><i data-lucide="camera"></i>CAMERA</button>
+          <button class="ctl-btn on" id="btn-rays"><i data-lucide="radar"></i>RAYS</button>
+          <button class="ctl-btn" id="btn-shuffle"><i data-lucide="shuffle"></i>NEW COURSE</button>
+          <button class="ctl-btn" id="btn-reset"><i data-lucide="rotate-ccw"></i>RESET</button>
+        </div>
+        <div class="stats">
+          <span>INFERENCE <b id="val-latency">0.00</b> ms</span>
+          <span>FPS <b id="val-fps">0</b></span>
+          <span>WALL HITS <b id="val-crashes">0</b></span>
+          <span>OBSTACLE HITS <b id="val-obstacles">0</b></span>
+        </div>
+        <div class="keys">
+          <kbd>M</kbd> mode · <kbd>WASD</kbd> drive · <kbd>SPACE</kbd> handbrake · <kbd>C</kbd> camera · <kbd>V</kbd> rays ·
+          <kbd>O</kbd> new course · <kbd>R</kbd> reset · <kbd>1-4</kbd> maps · <kbd>H</kbd> hide HUD · <kbd>P</kbd> pause
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Right Radar -->
+    <div class="glass-panel" data-panel="radar" style="grid-column: 3; grid-row: 3; align-self: end;">
+      <div class="panel-head">
+        <span class="panel-title">LIDAR <b>11 × 50 m</b></span>
+        <button class="min-btn" title="Minimize"><i data-lucide="minus"></i><i data-lucide="plus"></i></button>
+      </div>
+      <div class="panel-body radar-body">
+        <canvas id="radar-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div id="hud-hint">HUD hidden — press <kbd>H</kbd></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
