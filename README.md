@@ -1,4 +1,46 @@
-# APEX-RL — 3D Reinforcement-Learning Car Simulator
+<p align="center">
+  <img src="docs/media/logo.svg" alt="APEX-RL" width="100%">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/PyTorch-CUDA%2012.8-EE4C2C?logo=pytorch&logoColor=white" alt="PyTorch">
+  <img src="https://img.shields.io/badge/ONNX%20Runtime-Web%201.31-005CED?logo=onnx&logoColor=white" alt="ONNX Runtime">
+  <img src="https://img.shields.io/badge/Three.js-r187-000000?logo=threedotjs&logoColor=white" alt="Three.js">
+  <img src="https://img.shields.io/badge/Rapier3D-0.21-FF5A36" alt="Rapier3D">
+  <img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" alt="Vite">
+  <img src="https://img.shields.io/badge/RL-PPO-00C4A7" alt="PPO">
+</p>
+
+<p align="center">
+  <b>A PPO policy trained on 4,096 parallel GPU cars, then driven live in your browser by the same neural net.</b><br>
+  LIDAR rays in, steering / throttle / handbrake out — across grass, desert, crosswind canyons and ice, with obstacles and boost pads.
+</p>
+
+<p align="center">
+  <img src="docs/media/grass.gif" alt="AI pilot on the Grassy Circuit" width="720">
+</p>
+
+<p align="center">
+  ▶️ <a href="docs/media/demo.mp4"><b>Watch the 30-second demo video (MP4)</b></a> &nbsp;·&nbsp;
+  🚀 <a href="#quick-start"><b>Quick start</b></a> &nbsp;·&nbsp;
+  📊 <a href="#shipped-policy--results"><b>Results</b></a>
+</p>
+
+## Gallery
+
+| Desert Dunes | Windy Canyons | Synthwave Glacier |
+| :---: | :---: | :---: |
+| <img src="docs/media/desert.gif" alt="Desert Dunes" width="260"> | <img src="docs/media/windy.gif" alt="Windy Canyons" width="260"> | <img src="docs/media/ice.gif" alt="Synthwave Glacier" width="260"> |
+| Heat shimmer, sand spray, warm LUT. μ 0.50 with torque sinking | Gusting crosswind, wind streaks, height fog. μ 0.75 | Fresnel ice, neon bloom, slip trails. μ 0.12 |
+
+| Cinematic orbit camera | Top-down + full HUD |
+| :---: | :---: |
+| <img src="docs/media/orbit.gif" alt="Cinematic orbit camera" width="400"> | <img src="docs/media/topdown.gif" alt="Top-down camera with HUD" width="400"> |
+
+All clips are the shipped policy driving live in Chrome: no scripted paths and no human input.
+
+## What it is
 
 An end-to-end autonomous racing stack:
 

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-label="APEX-RL">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#161032"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00ffcc"/>
+      <stop offset="0.55" stop-color="#3fa9ff"/>
+      <stop offset="1" stop-color="#ff2d95"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e9fffb"/>
+      <stop offset="1" stop-color="#9ff3ff"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.04"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="320" rx="28" fill="url(#bg)"/>
+  <rect width="1200" height="320" rx="28" fill="url(#grid)"/>
+
+  <!-- track edges + racing line through an apex -->
+  <path d="M-10 290 C 260 290, 330 70, 600 70 S 960 250, 1210 120" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="70" stroke-linecap="round"/>
+  <path d="M-10 290 C 260 290, 330 70, 600 70 S 960 250, 1210 120" fill="none" stroke="url(#line)" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+
+  <!-- car + LIDAR fan -->
+  <g transform="translate(600 70)">
+    <g stroke-width="2" stroke-linecap="round" filter="url(#glow)">
+      <line x1="0" y1="0" x2="150" y2="0" stroke="#00ffcc"/>
+      <line x1="0" y1="0" x2="141" y2="-26" stroke="#00ffcc" stroke-opacity="0.85"/>
+      <line x1="0" y1="0" x2="141" y2="26" stroke="#00ffcc" stroke-opacity="0.85"/>
+      <line x1="0" y1="0" x2="115" y2="-58" stroke="#ffaa00" stroke-opacity="0.85"/>
+      <line x1="0" y1="0" x2="115" y2="58" stroke="#ffaa00" stroke-opacity="0.85"/>
+      <line x1="0" y1="0" x2="60" y2="-75" stroke="#ff2d95" stroke-opacity="0.8"/>
+      <line x1="0" y1="0" x2="60" y2="75" stroke="#ff2d95" stroke-opacity="0.8"/>
+    </g>
+    <rect x="-22" y="-11" width="44" height="22" rx="6" fill="#ff2d55" filter="url(#glow)"/>
+    <rect x="-6" y="-8" width="16" height="16" rx="3" fill="#0b1020" fill-opacity="0.6"/>
+  </g>
+
+  <text x="80" y="200" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="112" font-weight="800" letter-spacing="6" fill="url(#title)" filter="url(#glow)">APEX<tspan fill="#ff2d95">-</tspan>RL</text>
+  <text x="84" y="250" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="26" font-weight="500" letter-spacing="3" fill="#9fb3d9">REINFORCEMENT-LEARNING RACING · PYTORCH → ONNX → BROWSER</text>
+</svg>
