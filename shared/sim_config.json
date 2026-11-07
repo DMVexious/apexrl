@@ -1,0 +1,143 @@
+{
+  "_comment": "Single source of truth shared by python_training (training sim) and web_visualizer (Rapier sim). Coordinates: 2D plane (x, y), yaw CCW from +x. Three.js maps (x, y) -> (x, height, -y).",
+  "control_hz": 60,
+  "physics_substeps": 2,
+  "sensors": {
+    "ray_count": 11,
+    "ray_min_deg": -90,
+    "ray_max_deg": 90,
+    "ray_angles_deg": [-90, -60, -35, -20, -10, 0, 10, 20, 35, 60, 90],
+    "ray_max_dist": 50.0,
+    "ray_height": 0.5,
+    "_obstacle_inflate": "Optional: grow obstacle circles by this many metres in the ray test only (not collisions), so a ray reports free distance for the whole car body. Must match the value the shipped policy was trained with (0 for car_policy.onnx). 1.0 was tried: fewer obstacle hits on grass/desert, more wall contacts on desert/ice, no net gain.",
+    "obstacle_inflate": 0.0
+  },
+  "observation_scale": [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 40, 10, 3, 1, 1, 1, 1, 1],
+  "car": {
+    "mass": 1200.0,
+    "yaw_inertia": 1800.0,
+    "lf": 1.25,
+    "lr": 1.45,
+    "half_width": 0.95,
+    "half_length": 2.1,
+    "max_steer_deg": 35.0,
+    "steer_rate": 4.0,
+    "drive_force": 7000.0,
+    "brake_force": 14000.0,
+    "handbrake_force": 4000.0,
+    "handbrake_grip_cut": 0.8,
+    "drag": 0.42,
+    "tire_stiffness": 8.0,
+    "min_slip_speed": 3.0,
+    "wind_force": 3500.0
+  },
+  "terrains": {
+    "grass": {
+      "mu": 0.85,
+      "drive": 1.0,
+      "roll": 0.015,
+      "rear_grip": 1.0,
+      "wind": 0.0
+    },
+    "desert": {
+      "mu": 0.5,
+      "drive": 0.72,
+      "roll": 0.045,
+      "rear_grip": 1.0,
+      "wind": 0.0
+    },
+    "windy": {
+      "mu": 0.75,
+      "drive": 1.0,
+      "roll": 0.015,
+      "rear_grip": 1.0,
+      "wind": 1.0
+    },
+    "ice": {
+      "mu": 0.12,
+      "drive": 1.0,
+      "roll": 0.01,
+      "rear_grip": 0.8,
+      "wind": 0.0
+    }
+  },
+  "tracks": {
+    "grass": {
+      "radius": 115,
+      "aspect": 1.35,
+      "half_width": 7.0,
+      "harmonics": [
+        [2, 0.07, 0.4],
+        [3, 0.055, 1.9],
+        [5, 0.012, 0.3]
+      ],
+      "elevation": [
+        [2, 3.6, 0.3],
+        [3, 2.1, 1.7],
+        [7, 0.75, 0.4]
+      ]
+    },
+    "desert": {
+      "radius": 125,
+      "aspect": 1.15,
+      "half_width": 7.5,
+      "harmonics": [
+        [2, 0.1, 2.2],
+        [3, 0.04, 0.7],
+        [4, 0.025, 4.1]
+      ],
+      "elevation": [
+        [3, 2.3, 0.5],
+        [8, 0.6, 2.0],
+        [11, 0.3, 1.1]
+      ]
+    },
+    "windy": {
+      "radius": 120,
+      "aspect": 1.5,
+      "half_width": 7.0,
+      "harmonics": [
+        [2, 0.05, 1.1],
+        [3, 0.06, 3.3],
+        [4, 0.02, 5.0]
+      ],
+      "elevation": [
+        [1, 8.0, 0.0],
+        [3, 2.4, 1.2],
+        [6, 0.7, 0.5]
+      ]
+    },
+    "ice": {
+      "radius": 110,
+      "aspect": 1.25,
+      "half_width": 8.0,
+      "harmonics": [
+        [2, 0.06, 5.2],
+        [3, 0.05, 2.6]
+      ],
+      "elevation": [
+        [1, 2.0, 0.6],
+        [3, 0.45, 2.0]
+      ]
+    }
+  },
+  "track_points": 512,
+  "course": {
+    "_comment": "Obstacles sit in evenly spaced slots (>=1 per slot) so there is always room to brake/dodge; lateral placement leaves >= lateral_gap m of road on the narrower side. Boost pads push the car forward like a jet (ignores tyre grip). Cones are browser-only physics props.",
+    "obstacle_slots": 12,
+    "lateral_gap": 3.2,
+    "spawn_clear_ahead_pts": 22,
+    "spawn_clear_behind_pts": 6,
+    "car_collision_radius": 0.95,
+    "car_collision_offset": 1.15,
+    "boost_slots": 4,
+    "boost_length": 7.0,
+    "boost_half_width": 2.5,
+    "maps": {
+      "grass": { "obstacles": 8, "radius": [1.6, 2.4], "boost_pads": 3, "boost_force": 5000, "cones": 36 },
+      "desert": { "obstacles": 8, "radius": [1.8, 2.6], "boost_pads": 3, "boost_force": 5000, "cones": 30 },
+      "windy": { "obstacles": 7, "radius": [1.6, 2.3], "boost_pads": 3, "boost_force": 5000, "cones": 30 },
+      "ice": { "obstacles": 5, "radius": [1.4, 2.0], "boost_pads": 2, "boost_force": 1200, "cones": 30 }
+    }
+  }
+}

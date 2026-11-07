@@ -1,0 +1,8 @@
+# PyTorch: for CUDA (incl. RTX 50-series / Blackwell) install the CUDA 12.8+ wheel first, e.g.
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+# The trainer falls back to CPU automatically if CUDA is unavailable.
+torch>=2.3
+numpy>=1.26
+gymnasium>=0.29
+onnx>=1.16
+onnxruntime>=1.17
